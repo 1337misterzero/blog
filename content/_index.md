@@ -1,11 +1,11 @@
 ---
-title: "zero"
+title: "zero_"
 ---
 
-# zero
+A personal transmission log.
 
-systems / networks / code / linux / noise
+Systems, networks, Linux, code, security, engineering and whatever survives the noise.
 
-A personal corner of the internet.
-
-This is where I keep notes, projects, experiments and things worth remembering.
+No algorithm.
+No performance.
+Just signal.

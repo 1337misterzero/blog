@@ -1,15 +1,14 @@
 ---
 title: "About"
+description: "About this node."
 ---
 
-# About
+# ABOUT_
 
-I'm zero.
+This is a personal node on the network.
 
-I spend a lot of time around computers, networks, Linux and engineering.
+I write about systems, networks, Linux, programming, security and engineering.
 
-This site is a personal log.
+Projects, notes, failures, experiments and things worth remembering.
 
-No growth strategy. No content calendar.
-
-Just work.
+> Build something. Break something. Understand it.
