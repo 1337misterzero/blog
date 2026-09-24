@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 760">
+<defs>
+  <linearGradient id="skin" x1="0" x2="1"><stop offset="0" stop-color="#e9e2ee"/><stop offset=".55" stop-color="#85758e"/><stop offset="1" stop-color="#291e31"/></linearGradient>
+  <linearGradient id="metal" x1="0" x2="1"><stop offset="0" stop-color="#111118"/><stop offset=".45" stop-color="#d2d7de"/><stop offset=".58" stop-color="#575c67"/><stop offset="1" stop-color="#0a0a0e"/></linearGradient>
+  <linearGradient id="shirt" x1="0" x2="1"><stop offset="0" stop-color="#111017"/><stop offset=".7" stop-color="#2a1b32"/><stop offset="1" stop-color="#09080c"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<g opacity=".96">
+  <path d="M183 270c-10-104 44-180 129-187 69-6 128 43 135 117 5 54-18 92-63 119-31 19-72 27-120 20-41-6-67-25-81-69z" fill="url(#skin)"/>
+  <path d="M173 182c4-82 65-130 133-127 55 3 102 31 124 86-49-20-77-30-113-12-43 21-89 34-144 53z" fill="#09080d"/>
+  <path d="M188 260c22 33 75 52 139 50 43-1 79-13 102-33-1 66-15 106-53 131-27 18-72 22-114 10-47-14-69-58-74-158z" fill="#151019"/>
+  <path d="M240 265c27 19 72 21 102 3" fill="none" stroke="#08070a" stroke-width="8" stroke-linecap="round"/>
+  <path d="M220 225c19-15 43-20 63-8M337 216c19-10 43-8 62 7" fill="none" stroke="#0a080c" stroke-width="12" stroke-linecap="round"/>
+  <path d="M245 242l11 2M349 243l11-1" stroke="#b7a9bd" stroke-width="4" stroke-linecap="round"/>
+  <path d="M179 348c50 21 111 30 181 14l99 60c28 18 49 57 57 104H103c8-54 34-93 63-113l97-67z" fill="url(#shirt)"/>
+  <path d="M348 356c46-5 88 10 119 48l-18 177H332l32-124-44-56z" fill="url(#metal)" filter="url(#glow)"/>
+  <path d="M117 519c109 12 223 12 345 0" stroke="#4c3a55" stroke-width="2" opacity=".7"/>
+  <path d="M428 236c-8 25-10 51-4 77" stroke="#00e5ff" stroke-width="4" opacity=".7" filter="url(#glow)"/>
+  <path d="M177 346l-46 62-1 171" stroke="#ff2bd6" stroke-width="4" opacity=".65" filter="url(#glow)"/>
+  <path d="M213 620c61-28 127-31 198-9" fill="none" stroke="#a855f7" stroke-width="5" opacity=".45" filter="url(#glow)"/>
+</g>
+</svg>
