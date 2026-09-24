@@ -161,11 +161,13 @@ window.ZERO_ADMIN={apiBase:"https://YOUR-WORKER-URL.workers.dev"};
 <script>
 const API=String(window.ZERO_ADMIN?.apiBase||"").replace(/\/$/,"");
 const $=id=>document.getElementById(id);
-const state={posts:[],files:[],current:null,mode:"post"};
+const state={posts:[],files:[],current:null,mode:"post",token:sessionStorage.getItem("zero_admin_api_token")||""};
 
 function setStatus(text,cls="status"){const el=$("saveStatus");el.textContent=text;el.className=cls}
 async function api(path,options={}){
-  const res=await fetch(API+path,{credentials:"include",headers:{"Content-Type":"application/json",...(options.headers||{})},...options});
+  const headers={"Content-Type":"application/json",...(options.headers||{})};
+  if(state.token)headers.Authorization="Bearer "+state.token;
+  const res=await fetch(API+path,{headers,...options});
   const data=await res.json().catch(()=>({}));
   if(!res.ok) throw new Error(data.error||("HTTP "+res.status));
   return data;
@@ -324,21 +326,25 @@ document.querySelectorAll(".tab").forEach(tab=>tab.onclick=()=>{
   $("postList").classList.toggle("hidden",mode!=="posts");
   $("fileList").classList.toggle("hidden",mode!=="files");
 });
-$("logoutBtn").onclick=async()=>{
-  try{await api("/logout",{method:"POST"})}catch{}
-  $("app").classList.add("hidden");$("loginPanel").classList.remove("hidden");
+$("logoutBtn").onclick=()=>{
+  state.token="";
+  sessionStorage.removeItem("zero_admin_api_token");
+  $("app").classList.add("hidden");
+  $("loginPanel").classList.remove("hidden");
 };
 $("loginBtn").onclick=async()=>{
   const status=$("loginStatus");
   try{
     if(!API||API.includes("YOUR-WORKER-URL"))throw new Error("Admin API is not configured yet.");
-    await api("/login",{method:"POST",body:JSON.stringify({password:$("password").value})});
+    const login=await api("/login",{method:"POST",body:JSON.stringify({password:$("password").value})});
+    state.token=login.token;
+    sessionStorage.setItem("zero_admin_api_token",state.token);
     $("loginPanel").classList.add("hidden");$("app").classList.remove("hidden");
     await Promise.all([loadPosts(),loadFiles()]);
   }catch(e){status.textContent=e.message;status.className="status err"}
 };
-if(!API||API.includes("YOUR-WORKER-URL")){
-  $("loginStatus").textContent="Set the Worker URL in static/admin/index.html before using admin.";
+if(!API){
+  $("loginStatus").textContent="Admin API unavailable.";
   $("loginStatus").className="status err";
 }
 </script>
