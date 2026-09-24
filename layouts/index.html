@@ -1,0 +1,81 @@
+{{ define "main" }}
+
+<section class="hero">
+  <div class="hero-meta">NODE 01 / PRIVATE TRANSMISSION / ONLINE</div>
+
+  <h1 class="glitch" data-text="ZERO">ZERO<span>_</span></h1>
+
+  <p class="tagline">systems / networks / code / linux / noise</p>
+
+  <p class="hero-description">
+    A personal corner of the internet.
+  </p>
+
+  <div class="hero-actions">
+    <a class="button" href="{{ "/posts/" | relURL }}">ENTER ARCHIVE</a>
+    <a class="button secondary" href="{{ "/about/" | relURL }}">ABOUT</a>
+  </div>
+
+  <div class="coordinates">
+    01 // SIGNAL ACTIVE // NO ALGORITHM
+  </div>
+</section>
+
+<section class="transmissions">
+  <div class="section-header">
+    <span>TRANSMISSIONS</span>
+    <a href="{{ "/posts/" | relURL }}">VIEW ALL →</a>
+  </div>
+
+  <div class="post-grid">
+    {{ $posts := where .Site.RegularPages "Section" "posts" }}
+    {{ range first 8 (sort $posts "Date" "desc") }}
+      <article class="post-card">
+
+        <div class="post-card-meta">
+          {{ .Date.Format "2006.01.02" }}
+          //
+          {{ with .Params.category }}{{ . }}{{ else }}TRANSMISSION{{ end }}
+        </div>
+
+        <h2>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </h2>
+
+        {{ with .Params.image }}
+          <img class="post-card-image" src="{{ . | relURL }}" alt="">
+        {{ end }}
+
+        {{ with .Description }}
+          <p>{{ . }}</p>
+        {{ else }}
+          <p>{{ .Summary | plainify | truncate 160 }}</p>
+        {{ end }}
+
+        <a class="read-more" href="{{ .RelPermalink }}">READ TRANSMISSION →</a>
+
+      </article>
+    {{ else }}
+      <div class="empty-state">
+        NO TRANSMISSIONS FOUND.
+      </div>
+    {{ end }}
+  </div>
+</section>
+
+<section class="terminal">
+  <div class="terminal-bar">
+    <span>●</span><span>●</span><span>●</span>
+    <strong>zero@node:~</strong>
+  </div>
+
+  <div class="terminal-body">
+    <p><span class="prompt">zero@node:~$</span> whoami</p>
+    <p>zero_</p>
+    <br>
+    <p><span class="prompt">zero@node:~$</span> status</p>
+    <p class="online">ONLINE // SIGNAL RECEIVED</p>
+  </div>
+</section>
+
+{{ end }}
