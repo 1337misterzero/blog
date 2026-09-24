@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ .Site.Title }}</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#08050d;color:#e9e0ee;font-family:Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center}
+main{width:min(800px,90%);padding:60px 0}
+.logo{font:700 52px monospace;text-shadow:3px 0 #9b00ff,-2px 0 #ff2bd6}
+.cursor{color:#b026ff;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0}}
+.line{height:1px;background:#2b1935;margin:28px 0}
+p{color:#aaa0b1;line-height:1.8}
+nav{display:flex;gap:28px;margin-top:35px;font-family:monospace}
+a{color:#c45cff;text-decoration:none}
+a:hover{color:#fff;text-shadow:0 0 12px #b026ff}
+small{color:#5e5264;font-family:monospace}
+</style>
+</head>
+<body>
+<main>
+<div class="logo">zero<span class="cursor">_</span></div>
+<div class="line"></div>
+<p>systems / networks / code / linux / noise</p>
+<p>A personal corner of the internet.</p>
+<nav><a href="#">posts</a><a href="#">projects</a><a href="#">about</a></nav>
+<div class="line"></div>
+<small>signal / noise</small>
+</main>
+</body>
+</html>

@@ -4,10 +4,8 @@ title: "zero"
 
 # zero
 
-notes from the edge.
+systems / networks / code / linux / noise
 
-systems, networks, code, linux, security and whatever ends up on the machine.
+A personal corner of the internet.
 
-not a portfolio. not a brand.
-
-just a place to keep things.
+This is where I keep notes, projects, experiments and things worth remembering.

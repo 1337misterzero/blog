@@ -1,0 +1,6 @@
+baseURL = "https://1337misterzero.github.io/blog/"
+languageCode = "en-us"
+title = "zero"
+
+[params]
+description = "systems / networks / code / linux / noise"
