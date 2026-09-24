@@ -1,29 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{ .Title }} // zero_</title>
-<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ .Title }} // zero</title>
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
 </head>
+
 <body>
-<header>
-<a class="logo" href="{{ "/" | relURL }}">zero_</a>
-<nav>
-<a href="{{ "/" | relURL }}">home</a>
-<a href="{{ "/posts/" | relURL }}">posts</a>
-<a href="{{ "/about/" | relURL }}">about</a>
-</nav>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="{{ "/" | relURL }}">zero</a>
+    <nav>
+      <a href="{{ "/" | relURL }}">home</a>
+      <a href="{{ "/posts/" | relURL }}">posts</a>
+      <a href="{{ "/about/" | relURL }}">about</a>
+    </nav>
+  </div>
 </header>
-<main>
-<article class="article">
-<div class="date">{{ .Date.Format "2006.01.02" }} // TRANSMISSION</div>
-<h1>{{ .Title }}</h1>
-{{ with .Description }}<p class="description">{{ . }}</p>{{ end }}
-<div class="content">{{ .Content }}</div>
-<a class="read" href="{{ "/posts/" | relURL }}">← BACK TO ARCHIVE</a>
-</article>
+
+<main class="wrap article">
+  <div class="post-meta">{{ .Date.Format "2006.01.02" }}</div>
+
+  <h1>{{ .Title }}</h1>
+
+  {{ with .Description }}
+    <p class="article-description">{{ . }}</p>
+  {{ end }}
+
+  <div class="article-content">
+    {{ .Content }}
+  </div>
+
+  <a class="read" href="{{ "/posts/" | relURL }}">← back to posts</a>
 </main>
-<footer>zero_ // end transmission</footer>
+
+<footer class="site-footer">
+  <div class="wrap">zero // end transmission</div>
+</footer>
 </body>
 </html>

@@ -1,33 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{ .Title }} // zero_</title>
-<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ .Title }} // zero</title>
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
 </head>
+
 <body>
-<header>
-<a class="logo" href="{{ "/" | relURL }}">zero_</a>
-<nav>
-<a href="{{ "/" | relURL }}">home</a>
-<a href="{{ "/posts/" | relURL }}">posts</a>
-<a href="{{ "/about/" | relURL }}">about</a>
-</nav>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="{{ "/" | relURL }}">zero</a>
+    <nav>
+      <a href="{{ "/" | relURL }}">home</a>
+      <a href="{{ "/posts/" | relURL }}">posts</a>
+      <a href="{{ "/about/" | relURL }}">about</a>
+    </nav>
+  </div>
 </header>
-<main>
-<section class="section archive">
-<h1>TRANSMISSIONS_</h1>
-{{ range .Pages.ByDate.Reverse }}
-<article>
-<div class="date">{{ .Date.Format "2006.01.02" }}</div>
-<h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-<p>{{ .Description }}</p>
-<a class="read" href="{{ .RelPermalink }}">READ →</a>
-</article>
-{{ end }}
-</section>
+
+<main class="wrap page">
+  <div class="eyebrow">ARCHIVE</div>
+  <h1>posts</h1>
+
+  <div class="archive">
+    {{ range .Pages.ByDate.Reverse }}
+      <article class="archive-item">
+        <div class="post-meta">{{ .Date.Format "2006.01.02" }}</div>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{ with .Description }}<p>{{ . }}</p>{{ end }}
+        <a class="read" href="{{ .RelPermalink }}">read →</a>
+      </article>
+    {{ else }}
+      <p>No posts found.</p>
+    {{ end }}
+  </div>
 </main>
-<footer>zero_ // end transmission</footer>
+
+<footer class="site-footer">
+  <div class="wrap">zero // end transmission</div>
+</footer>
 </body>
 </html>

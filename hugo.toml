@@ -1,7 +1,13 @@
 baseURL = 'https://1337misterzero.github.io/blog/'
-title = 'zero_'
-languageCode = 'en-us'
-paginate = 10
+title = 'zero'
+defaultContentLanguage = 'en'
+mainSections = ['posts']
+
+[languages]
+  [languages.en]
+    label = 'English'
+    locale = 'en-US'
+    title = 'zero'
 
 [params]
   description = 'systems / networks / code / linux / security / engineering'

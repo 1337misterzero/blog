@@ -17,37 +17,45 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: peaceiris/actions-hugo@v3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: latest
           extended: true
 
-      - uses: actions/configure-pages@v5
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
-      - name: Build Hugo
+      - name: Build
         run: hugo --cleanDestinationDir --gc --minify
 
-      - name: Check generated site
+      - name: Verify
         run: |
           test -s public/index.html
           test -d public/posts
-          echo "BUILD OK"
-          du -sh public
-          find public -maxdepth 2 -type f | sort | head -50
+          test -f public/about/index.html
+          grep -qi "transmissions" public/index.html
+          echo "HUGO BUILD OK"
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: public
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - id: deployment
+      - name: Deploy
+        id: deployment
         uses: actions/deploy-pages@v4

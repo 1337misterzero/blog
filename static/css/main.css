@@ -1,2 +1,302 @@
-:root{--bg:#07050b;--panel:#0d0913;--text:#eee8f5;--muted:#958ca1;--purple:#a855f7;--pink:#ff29d8;--cyan:#00e5ff;--line:#291b38}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.7}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(168,85,247,.025) 4px);z-index:10}a{color:inherit;text-decoration:none}header{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100% - 1100px)/2));position:relative}.logo{font:700 25px monospace;color:var(--purple);text-shadow:0 0 15px rgba(168,85,247,.5)}nav{display:flex;gap:28px;font:14px monospace}nav a:hover{color:var(--cyan)}main{max-width:1100px;margin:auto;padding:0 24px}.hero{min-height:570px;display:flex;flex-direction:column;justify-content:center}.status,.date{font:12px monospace;color:var(--purple);letter-spacing:2px}.hero h1{font:900 clamp(70px,14vw,170px)/.8 monospace;margin:35px 0;color:#fff;text-shadow:5px 0 var(--pink),-5px 0 var(--cyan)}.hero h1 span{color:var(--purple)}.hero p{font:16px monospace;color:var(--muted)}.buttons{display:flex;gap:12px;margin-top:30px}.buttons a,.read{border:1px solid var(--purple);padding:11px 18px;font:12px monospace;color:var(--purple)}.buttons a:hover,.read:hover{background:var(--purple);color:#09050d}.section{padding:80px 0}.section-title{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:15px;font:13px monospace;color:var(--purple)}.section-title a{color:var(--muted)}.posts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px}.posts article,.archive article{background:var(--panel);border:1px solid var(--line);padding:28px;transition:.2s}.posts article:hover,.archive article:hover{border-color:var(--purple);transform:translateY(-2px)}article h2{font-size:24px;margin:12px 0}article h2 a:hover{color:var(--purple)}article p{color:var(--muted)}.read{display:inline-block;margin-top:15px}.terminal{background:#030305;border:1px solid var(--line);padding:28px;font:14px monospace;line-height:2.2;margin-bottom:80px}.terminal strong{display:block;color:var(--cyan)}.terminal .online{color:#70ff9b}.article{max-width:800px;margin:100px auto}.article h1{font-size:clamp(40px,7vw,80px);line-height:1;margin:25px 0}.description{color:var(--muted);font-size:18px}.content{margin:50px 0;font-size:17px}.content pre{background:#030305;border:1px solid var(--line);padding:20px;overflow:auto}.content code{font-family:monospace;color:var(--cyan)}.archive{max-width:850px;margin:auto}.archive h1{font:40px monospace}.archive article{margin:15px 0}footer{border-top:1px solid var(--line);padding:30px 24px;text-align:center;color:#5d5367;font:11px monospace}@media(max-width:700px){nav{gap:12px}.posts{grid-template-columns:1fr}.hero{min-height:450px}.hero h1{font-size:70px}}
+:root{
+  --bg:#07050b;
+  --panel:#0d0912;
+  --text:#f2edf7;
+  --muted:#9b91a5;
+  --purple:#a855f7;
+  --purple2:#7c3aed;
+  --cyan:#00e5ff;
+  --pink:#ff29d8;
+  --line:#281a36;
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(168,85,247,.10),transparent 35%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.7;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    rgba(168,85,247,.018) 4px
+  );
+  z-index:50;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.wrap{
+  width:min(1080px,calc(100% - 40px));
+  margin:auto;
+}
+
+.site-header{
+  border-bottom:1px solid var(--line);
+  position:relative;
+}
+
+.header-inner{
+  min-height:74px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  font:700 25px/1 "JetBrains Mono",monospace;
+  color:var(--text);
+  letter-spacing:-1px;
+}
+
+.brand:hover{
+  color:var(--purple);
+  text-shadow:0 0 18px rgba(168,85,247,.45);
+}
+
+nav{
+  display:flex;
+  gap:28px;
+  font:13px "JetBrains Mono",monospace;
+  color:var(--muted);
+}
+
+nav a:hover{color:var(--cyan)}
+
+.hero{
+  min-height:570px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.eyebrow,.post-meta,.section-head{
+  font:12px "JetBrains Mono",monospace;
+  letter-spacing:1.6px;
+}
+
+.eyebrow{color:var(--purple)}
+
+.hero h1{
+  margin:28px 0 16px;
+  font:700 clamp(76px,15vw,160px)/.82 "JetBrains Mono",monospace;
+  letter-spacing:-8px;
+  text-transform:lowercase;
+  color:#fff;
+  text-shadow:
+    2px 0 var(--pink),
+    -2px 0 var(--cyan);
+}
+
+.tagline{
+  margin:0;
+  font:16px "JetBrains Mono",monospace;
+  color:var(--muted);
+}
+
+.intro{
+  max-width:620px;
+  margin:18px 0 0;
+  color:#c7becf;
+}
+
+.hero-links{
+  display:flex;
+  gap:12px;
+  margin-top:32px;
+}
+
+.button,.read{
+  display:inline-block;
+  border:1px solid var(--purple);
+  padding:10px 15px;
+  font:12px "JetBrains Mono",monospace;
+  color:var(--purple);
+  transition:.2s ease;
+}
+
+.button:hover,.read:hover{
+  background:var(--purple);
+  color:#08040b;
+}
+
+.button.ghost{
+  border-color:var(--line);
+  color:var(--muted);
+}
+
+.button.ghost:hover{
+  border-color:var(--cyan);
+  background:transparent;
+  color:var(--cyan);
+}
+
+.section{padding:50px 0 90px}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+  color:var(--purple);
+}
+
+.section-head a{
+  color:var(--muted);
+}
+
+.section-head a:hover{
+  color:var(--cyan);
+}
+
+.post-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  margin-top:18px;
+}
+
+.post-card,.archive-item{
+  background:linear-gradient(180deg,rgba(255,255,255,.018),transparent);
+  border:1px solid var(--line);
+  padding:28px;
+  transition:.2s ease;
+}
+
+.post-card:hover,.archive-item:hover{
+  border-color:rgba(168,85,247,.7);
+  transform:translateY(-2px);
+}
+
+.post-meta{
+  color:var(--purple);
+  opacity:.85;
+}
+
+.post-card h2,.archive-item h2{
+  margin:12px 0;
+  font-size:24px;
+  line-height:1.15;
+}
+
+.post-card h2 a:hover,.archive-item h2 a:hover{
+  color:var(--purple);
+}
+
+.post-card p,.archive-item p,.article-description{
+  color:var(--muted);
+}
+
+.read{
+  margin-top:14px;
+}
+
+.terminal{
+  margin:0 auto 100px;
+  padding:28px;
+  background:#030305;
+  border:1px solid var(--line);
+  font:14px/2 "JetBrains Mono",monospace;
+}
+
+.prompt{color:var(--purple)}
+.terminal-output{color:#eee}
+.online{color:#70ff9b}
+
+.page{
+  padding-top:90px;
+  padding-bottom:100px;
+}
+
+.page>h1{
+  font:600 clamp(42px,8vw,76px)/1 "JetBrains Mono",monospace;
+  margin:22px 0 50px;
+}
+
+.archive{
+  display:grid;
+  gap:16px;
+}
+
+.article{
+  max-width:820px;
+  padding-top:100px;
+  padding-bottom:100px;
+}
+
+.article h1{
+  font:600 clamp(42px,8vw,86px)/.95 "JetBrains Mono",monospace;
+  margin:20px 0;
+}
+
+.article-description{
+  font-size:18px;
+}
+
+.article-content{
+  margin:55px 0;
+  font-size:17px;
+}
+
+.article-content h2,
+.article-content h3{
+  color:#fff;
+}
+
+.article-content code{
+  color:var(--cyan);
+}
+
+.article-content pre{
+  overflow:auto;
+  padding:20px;
+  background:#030305;
+  border:1px solid var(--line);
+}
+
+.site-footer{
+  border-top:1px solid var(--line);
+  padding:28px 0;
+  color:#5f5567;
+  font:11px "JetBrains Mono",monospace;
+}
+
+.error-page{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+.error-page h1{
+  font:600 clamp(40px,8vw,80px)/1 "JetBrains Mono",monospace;
+  margin:20px 0 35px;
+}
+
+@media(max-width:700px){
+  .wrap{width:min(100% - 28px,1080px)}
+  .header-inner{align-items:flex-start;padding:18px 0;gap:18px}
+  nav{gap:14px}
+  .hero{min-height:470px}
+  .hero h1{font-size:76px}
+  .post-grid{grid-template-columns:1fr}
+}

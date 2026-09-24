@@ -1,61 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="{{ .Site.Params.description }}">
-<title>{{ .Site.Title }}</title>
-<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ .Site.Params.description }}">
+  <title>zero</title>
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
 </head>
+
 <body>
-<header>
-  <a class="logo" href="{{ "/" | relURL }}">zero_</a>
-  <nav>
-    <a href="{{ "/" | relURL }}">home</a>
-    <a href="{{ "/posts/" | relURL }}">posts</a>
-    <a href="{{ "/about/" | relURL }}">about</a>
-  </nav>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="{{ "/" | relURL }}">zero</a>
+
+    <nav>
+      <a href="{{ "/" | relURL }}">home</a>
+      <a href="{{ "/posts/" | relURL }}">posts</a>
+      <a href="{{ "/about/" | relURL }}">about</a>
+    </nav>
+  </div>
 </header>
 
 <main>
-<section class="hero">
-  <div class="status">● NODE ONLINE // PRIVATE TRANSMISSION</div>
-  <h1>ZERO<span>_</span></h1>
-  <p>systems / networks / code / linux / security / noise</p>
-  <div class="buttons">
-    <a href="{{ "/posts/" | relURL }}">ENTER ARCHIVE</a>
-    <a href="{{ "/about/" | relURL }}">ABOUT</a>
-  </div>
-</section>
+  <section class="hero wrap">
+    <div class="eyebrow">NODE 01 // ONLINE</div>
 
-<section class="section">
-  <div class="section-title">
-    <span>TRANSMISSIONS</span>
-    <a href="{{ "/posts/" | relURL }}">VIEW ALL →</a>
-  </div>
+    <h1>zero</h1>
 
-  <div class="posts">
-  {{ range first 10 (where .Site.RegularPages "Section" "posts") }}
-    <article>
-      <div class="date">{{ .Date.Format "2006.01.02" }} // TRANSMISSION</div>
-      <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-      {{ with .Description }}<p>{{ . }}</p>{{ else }}<p>{{ .Summary | plainify | truncate 180 }}</p>{{ end }}
-      <a class="read" href="{{ .RelPermalink }}">READ →</a>
-    </article>
-  {{ else }}
-    <article><p>NO TRANSMISSIONS FOUND.</p></article>
-  {{ end }}
-  </div>
-</section>
+    <p class="tagline">
+      systems / networks / code / linux / security
+    </p>
 
-<section class="terminal">
-  <div>zero@node:~$ whoami</div>
-  <strong>zero_</strong>
-  <div>zero@node:~$ status</div>
-  <strong class="online">ONLINE // SIGNAL RECEIVED</strong>
-</section>
+    <p class="intro">
+      Notes, projects, experiments and things worth remembering.
+    </p>
+
+    <div class="hero-links">
+      <a class="button" href="{{ "/posts/" | relURL }}">enter archive</a>
+      <a class="button ghost" href="{{ "/about/" | relURL }}">about</a>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="section-head">
+      <span>TRANSMISSIONS</span>
+      <a href="{{ "/posts/" | relURL }}">view all →</a>
+    </div>
+
+    <div class="post-grid">
+      {{ range first 10 (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+        <article class="post-card">
+          <div class="post-meta">
+            {{ .Date.Format "2006.01.02" }}
+          </div>
+
+          <h2>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h2>
+
+          {{ with .Description }}
+            <p>{{ . }}</p>
+          {{ else }}
+            <p>{{ .Summary | plainify | truncate 180 }}</p>
+          {{ end }}
+
+          <a class="read" href="{{ .RelPermalink }}">read transmission →</a>
+        </article>
+      {{ else }}
+        <article class="post-card">
+          <p>No transmissions yet.</p>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="wrap terminal">
+    <div><span class="prompt">zero@node:~$</span> whoami</div>
+    <div class="terminal-output">zero</div>
+    <div><span class="prompt">zero@node:~$</span> status</div>
+    <div class="terminal-output online">online // signal received</div>
+  </section>
 </main>
 
-<footer>zero_ // end transmission</footer>
+<footer class="site-footer">
+  <div class="wrap">zero // end transmission</div>
+</footer>
 </body>
 </html>
