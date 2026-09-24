@@ -1,42 +1,9 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ .Title }} // zero</title>
-  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
-</head>
-
-<body>
-<header class="site-header">
-  <div class="wrap header-inner">
-    <a class="brand" href="{{ "/" | relURL }}">zero</a>
-    <nav>
-      <a href="{{ "/" | relURL }}">home</a>
-      <a href="{{ "/posts/" | relURL }}">posts</a>
-      <a href="{{ "/about/" | relURL }}">about</a>
-    </nav>
-  </div>
-</header>
-
-<main class="wrap article">
-  <div class="post-meta">{{ .Date.Format "2006.01.02" }}</div>
-
+{{ define "main" }}
+<article class="article wrap">
+  <div class="post-date">{{ .Date.Format "02 Jan 2006" }}</div>
   <h1>{{ .Title }}</h1>
-
-  {{ with .Description }}
-    <p class="article-description">{{ . }}</p>
-  {{ end }}
-
-  <div class="article-content">
-    {{ .Content }}
-  </div>
-
-  <a class="read" href="{{ "/posts/" | relURL }}">← back to posts</a>
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">zero // end transmission</div>
-</footer>
-</body>
-</html>
+  {{ with .Description }}<p class="article-description">{{ . }}</p>{{ end }}
+  <div class="article-content">{{ .Content }}</div>
+  <a class="back" href="{{ "/posts/" | relURL }}">← posts</a>
+</article>
+{{ end }}
