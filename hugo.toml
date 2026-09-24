@@ -6,7 +6,6 @@ mainSections = ['posts']
 [params]
 description = 'systems / networks / code / linux / security / engineering'
 author = 'zero'
-walineServerURL = ''
 
 [markup]
 [markup.goldmark]
@@ -16,4 +15,3 @@ unsafe = true
 [outputs]
 home = ['HTML', 'RSS']
 section = ['HTML', 'RSS']
-walineServerURL = ''
