@@ -12,12 +12,43 @@
 <body>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand glitch" data-text="zero" href="/blog/">zero</a>
+      <a class="brand glitch" data-text="zero" href="/blog/" aria-label="zero home">zero</a>
+      <span class="header-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
     </div>
   </header>
 
   <main>{{ block "main" . }}{{ end }}</main>
 
+  <section class="radio-dock" id="radio-dock" aria-label="Rock radio player">
+    <audio
+      id="rock-radio"
+      preload="none"
+      crossorigin="anonymous"
+      src="https://ice5.somafm.com/metal-128-mp3">
+    </audio>
+
+    <div class="radio-scanline" aria-hidden="true"></div>
+
+    <button class="radio-play" id="radio-play" type="button" aria-label="Play rock radio">
+      <span class="radio-play-icon">▶</span>
+    </button>
+
+    <div class="radio-info">
+      <div class="radio-topline">
+        <span class="radio-status" id="radio-status">OFFLINE</span>
+        <span class="radio-live"><b></b> LIVE</span>
+      </div>
+      <div class="radio-name">METAL DETECTOR</div>
+      <div class="radio-sub">ROCK // METAL // INDUSTRIAL</div>
+    </div>
+
+    <label class="radio-volume" aria-label="Radio volume">
+      <span>VOL</span>
+      <input id="radio-volume" type="range" min="0" max="1" step="0.01" value="0.65">
+    </label>
+  </section>
+
   <script src="{{ "js/infinite.js" | relURL }}" defer></script>
+  <script src="{{ "js/radio.js" | relURL }}" defer></script>
 </body>
 </html>
