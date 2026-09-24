@@ -1,89 +1,13 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{{ .Site.Params.description }}">
-  <title>zero</title>
-  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
-</head>
-
-<body>
-<header class="site-header">
-  <div class="wrap header-inner">
-    <a class="brand" href="{{ "/" | relURL }}">zero</a>
-
-    <nav>
-      <a href="{{ "/" | relURL }}">home</a>
-      <a href="{{ "/posts/" | relURL }}">posts</a>
-      <a href="{{ "/about/" | relURL }}">about</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <section class="hero wrap">
-    <div class="eyebrow">NODE 01 // ONLINE</div>
-
-    <h1>zero</h1>
-
-    <p class="tagline">
-      systems / networks / code / linux / security
-    </p>
-
-    <p class="intro">
-      Notes, projects, experiments and things worth remembering.
-    </p>
-
-    <div class="hero-links">
-      <a class="button" href="{{ "/posts/" | relURL }}">enter archive</a>
-      <a class="button ghost" href="{{ "/about/" | relURL }}">about</a>
-    </div>
-  </section>
-
-  <section class="wrap section">
-    <div class="section-head">
-      <span>TRANSMISSIONS</span>
-      <a href="{{ "/posts/" | relURL }}">view all →</a>
-    </div>
-
-    <div class="post-grid">
-      {{ range first 10 (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
-        <article class="post-card">
-          <div class="post-meta">
-            {{ .Date.Format "2006.01.02" }}
-          </div>
-
-          <h2>
-            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-          </h2>
-
-          {{ with .Description }}
-            <p>{{ . }}</p>
-          {{ else }}
-            <p>{{ .Summary | plainify | truncate 180 }}</p>
-          {{ end }}
-
-          <a class="read" href="{{ .RelPermalink }}">read transmission →</a>
-        </article>
-      {{ else }}
-        <article class="post-card">
-          <p>No transmissions yet.</p>
-        </article>
-      {{ end }}
-    </div>
-  </section>
-
-  <section class="wrap terminal">
-    <div><span class="prompt">zero@node:~$</span> whoami</div>
-    <div class="terminal-output">zero</div>
-    <div><span class="prompt">zero@node:~$</span> status</div>
-    <div class="terminal-output online">online // signal received</div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">zero // end transmission</div>
-</footer>
-</body>
-</html>
+{{ define "main" }}
+<section class="feed wrap" id="post-feed">
+  {{ $posts := where .Site.RegularPages "Section" "posts" }}
+  {{ range $i, $post := $posts.ByDate.Reverse }}
+    <article class="post {{ if ge $i 4 }}post-hidden{{ end }}">
+      <div class="post-date">{{ $post.Date.Format "02 Jan 2006" }}</div>
+      <h1><a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a></h1>
+      <p class="preview">{{ with $post.Description }}{{ . }}{{ else }}{{ $post.Summary | plainify | truncate 220 }}{{ end }}</p>
+    </article>
+  {{ end }}
+  <div id="load-more" class="load-more" aria-hidden="true"></div>
+</section>
+{{ end }}
