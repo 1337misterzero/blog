@@ -1,0 +1,103 @@
+<style>
+:root {
+  --theme: #09060d;
+  --entry: #0d0913;
+  --primary: #eee7f5;
+  --secondary: #aaa0b4;
+  --tertiary: #30263a;
+  --content: #ddd4e5;
+  --code-bg: #0a0710;
+  --border: #261b30;
+  --accent: #b026ff;
+}
+
+body {
+  background:
+    radial-gradient(circle at 80% 10%, rgba(176,38,255,.10), transparent 28%),
+    radial-gradient(circle at 10% 80%, rgba(126,40,255,.06), transparent 25%),
+    #09060d;
+}
+
+.main {
+  max-width: 850px;
+}
+
+.first-entry {
+  min-height: 55vh;
+  background: linear-gradient(135deg, rgba(176,38,255,.06), transparent 55%);
+  border: 1px solid #21172a;
+}
+
+.post-title,
+.entry-hint-parent,
+.archive-entry-title {
+  letter-spacing: -.025em;
+}
+
+.post-content a,
+.entry-content a,
+.archive-entry-title a,
+.pagination a {
+  color: #c45cff;
+}
+
+.post-content a:hover,
+.entry-content a:hover,
+.archive-entry-title a:hover {
+  color: #e2b8ff;
+}
+
+.post-content code {
+  color: #d88cff;
+  background: #120b19;
+}
+
+.post-content pre {
+  border: 1px solid #261b30;
+  box-shadow: 0 0 30px rgba(176,38,255,.05);
+}
+
+.nav {
+  background: rgba(9,6,13,.92);
+}
+
+.logo a {
+  color: #f3eafa;
+}
+
+.logo a::after {
+  content: "_";
+  color: #b026ff;
+  animation: blink 1s steps(2,end) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+::selection {
+  background: #8d19d1;
+  color: white;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .025;
+  z-index: 9999;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(255,255,255,.7) 3px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+  }
+}
+</style>
