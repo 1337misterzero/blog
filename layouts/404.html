@@ -1,14 +1,28 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>404 — zero</title>
 <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
 </head>
 <body>
-<header class="site-header"><div class="wrap header-inner">
-<a class="brand" href="{{ "/" | relURL }}">zero</a>
-<nav><a href="{{ "/" | relURL }}">home</a><a href="{{ "/posts/" | relURL }}">posts</a><a href="{{ "/about/" | relURL }}">about</a></nav>
-</div></header>
-<main class="error wrap"><div class="post-date">404</div><h1>page not found</h1><a class="back" href="{{ "/" | relURL }}">home</a></main>
-</body></html>
+<div class="ambient" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="{{ "/" | relURL }}"><span>zero</span><i></i></a>
+    <nav>
+      <a href="{{ "/" | relURL }}">home</a>
+      <a href="{{ "/posts/" | relURL }}">posts</a>
+      <a href="{{ "/about/" | relURL }}">about</a>
+    </nav>
+    <div class="status"><span></span>online</div>
+  </div>
+</header>
+<main class="error wrap">
+  <div class="post-date">signal // 404</div>
+  <h1>page not found</h1>
+  <a class="open" href="{{ "/" | relURL }}">return home <span>→</span></a>
+</main>
+</body>
+</html>
