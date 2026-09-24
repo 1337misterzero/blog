@@ -20,7 +20,7 @@ Now, I'm trying to work with network infrastructure. I've already spent six mont
 
 * I have other qualifications, degrees, and I've had other jobs, but as far as hacking is concerned, that's basically it. Let's just say I switched careers.
 
-# # I'm not a script kiddie
+## I'm not a script kiddie
 
 Although it's obvious, I feel like I need to say it. As much as we love movies, TV shows, and games, real life isn't like that...
 
