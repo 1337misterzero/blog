@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       history.pushState({}, "", "/blog/");
     }
 
-    window.scrollTo({top:0,behavior:"instant"});
+    window.scrollTo(0,0);
   };
 
   const openPost=async(url,{updateHistory=true}={})=>{
@@ -96,7 +96,13 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     if(link.classList.contains("post-back") || new URL(href,location.href).pathname === "/blog/"){
       event.preventDefault();
-      closePost();
+
+      if(feed){
+        closePost();
+      }else{
+        window.location.href="/blog/";
+      }
+
       return;
     }
 
@@ -109,6 +115,11 @@ document.addEventListener("DOMContentLoaded",()=>{
   document.addEventListener("click",handleClick);
 
   window.addEventListener("popstate",()=>{
+    if(!feed){
+      window.location.reload();
+      return;
+    }
+
     if(location.pathname.startsWith("/blog/posts/")){
       openPost(location.href,{updateHistory:false});
     }else{
@@ -167,7 +178,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     observer.observe(sentinel);
   }
 
-  if(location.pathname.startsWith("/blog/posts/")){
+  if(feed && location.pathname.startsWith("/blog/posts/")){
     openPost(location.href,{updateHistory:false});
   }
 });
