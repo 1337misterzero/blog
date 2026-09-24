@@ -1,6 +1,8 @@
 {{ define "main" }}
-<section class="feed wrap">
-  <article class="post post-reader">
+<section class="feed wrap" id="single-post-page">
+  <article class="post post-reader" id="post-reader">
+    <a class="back post-back" href="/blog/">← voltar</a>
+
     <div class="post-date">{{ .Date.Format "02 Jan 2006" }}</div>
 
     <h1 class="post-title glitch article-title" data-text="{{ .Title }}">{{ .Title }}</h1>
@@ -12,8 +14,6 @@
     <div class="post-content">
       {{ .Content }}
     </div>
-
-    <a class="back post-back" href="/blog/">← voltar</a>
   </article>
 </section>
 {{ end }}
