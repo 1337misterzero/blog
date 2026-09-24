@@ -1,57 +1,26 @@
 {{ define "main" }}
-<section class="hero wrap">
-  <div class="hero-copy">
-    <div class="eyebrow">01 // PERSONAL NODE</div>
-    <p class="hero-line">systems / networks / linux / security</p>
+{{ $posts := where .Site.RegularPages "Section" "posts" }}
+{{ $p := .Paginate ($posts.ByDate.Reverse) 5 }}
 
-    <div class="hero-rule">
-      <span></span>
-      <span></span>
-    </div>
+<section class="feed wrap" id="post-feed" data-next="{{ if $p.HasNext }}{{ $p.Next.URL }}{{ end }}">
+  {{ range $p.Pages }}
+    <article class="post">
+      <div class="post-date">{{ .Date.Format "02 Jan 2006" }}</div>
 
-    <div class="hero-meta">
-      <span>online</span>
-      <span>signal stable</span>
-    </div>
-  </div>
+      <h1 class="post-title">
+        <a class="glitch-hover" data-text="{{ .Title }}" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </h1>
 
-  <div class="ghost-stage" aria-hidden="true">
-    <div class="ghost-noise"></div>
-    <img class="ghost ghost-a" src="{{ "images/chrome-rocker.svg" | relURL }}" alt="">
-    <img class="ghost ghost-b" src="{{ "images/chrome-rocker.svg" | relURL }}" alt="">
-    <img class="ghost ghost-c" src="{{ "images/chrome-rocker.svg" | relURL }}" alt="">
-    <div class="ghost-scan"></div>
-    <span class="ghost-label">SIGNAL / LOST / FOUND</span>
-  </div>
-</section>
-
-<section class="feed wrap" id="post-feed">
-  {{ $posts := where .Site.RegularPages "Section" "posts" }}
-
-  {{ range $i, $post := $posts.ByDate.Reverse }}
-    <article class="post {{ if ge $i 4 }}post-hidden{{ end }}">
-      <div class="post-index">#{{ printf "%02d" (add $i 1) }}</div>
-
-      <div class="post-body">
-        <div class="post-date">{{ $post.Date.Format "02 Jan 2006" }}</div>
-
-        <h1>
-          <a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a>
-        </h1>
-
-        <p class="preview">
-          {{ with $post.Description }}
-            {{ . }}
-          {{ else }}
-            {{ $post.Summary | plainify | truncate 220 }}
-          {{ end }}
-        </p>
-
-        <a class="open" href="{{ $post.RelPermalink }}">open <span>→</span></a>
-      </div>
+      <p class="preview">
+        {{ with .Description }}
+          {{ . }}
+        {{ else }}
+          {{ .Summary | plainify | truncate 220 }}
+        {{ end }}
+      </p>
     </article>
   {{ else }}
-    <div class="empty">no posts</div>
+    <div class="empty">No posts.</div>
   {{ end }}
 
   <div id="load-more" class="load-more" aria-hidden="true"></div>
