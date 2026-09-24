@@ -303,27 +303,8 @@ button{
   transition:padding-left .2s ease,border-color .2s ease,transform .2s ease;
 }
 
-.post::before{
-  content:"";
-  position:absolute;
-  left:-1px;
-  top:0;
-  bottom:0;
-  width:2px;
-  opacity:0;
-  transform:scaleY(.2);
-  transform-origin:center;
-  background:linear-gradient(var(--blue),var(--purple));
-  transition:opacity .22s ease,transform .22s ease;
-}
-
 .post:hover{
   border-color:var(--line-bright);
-}
-
-.post:hover::before{
-  opacity:.8;
-  transform:scaleY(.72);
 }
 
 .post-date{
