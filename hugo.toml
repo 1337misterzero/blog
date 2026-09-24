@@ -3,17 +3,11 @@ title = 'zero'
 defaultContentLanguage = 'en'
 mainSections = ['posts']
 
-[languages]
-  [languages.en]
-    label = 'English'
-    locale = 'en-US'
-    title = 'zero'
-
 [params]
-  description = 'systems / networks / code / linux / security / engineering'
-  author = 'zero'
+description = 'systems / networks / code / linux / security / engineering'
+author = 'zero'
 
 [markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
