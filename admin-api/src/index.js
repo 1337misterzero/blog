@@ -167,8 +167,7 @@ export default {
       }
 
       const content64=b64(enc.encode(String(body.content||"")));
-      const result=await gh("/repos/1337misterzero/blog/contents/"+path,{
-        ...env,
+      const result=await gh("/repos/1337misterzero/blog/contents/"+path,env,{
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({
