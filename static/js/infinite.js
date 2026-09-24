@@ -75,7 +75,8 @@ document.addEventListener("DOMContentLoaded",()=>{
         history.pushState({post:url},"",url);
       }
 
-      window.scrollTo({top:0,behavior:"instant"});
+      window.initComments?.(view);
+      window.scrollTo(0,0);
     }catch(error){
       view.innerHTML='<div class="post post-reader"><a class="back post-back" href="/blog/">← voltar</a><div class="empty">Unable to load post.</div></div>';
     }
