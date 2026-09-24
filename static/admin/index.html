@@ -82,12 +82,8 @@ input:focus,textarea:focus,select:focus{border-color:rgba(0,217,255,.45);box-sha
 <main class="shell">
   <section id="loginPanel" class="login panel">
     <h1 class="title">admin access</h1>
-    <p class="sub">Password-only access. No GitHub token is exposed in the browser.</p>
-    <div class="field">
-      <label>Password</label>
-      <input id="password" type="password" autocomplete="current-password">
-    </div>
-    <button class="btn primary" id="loginBtn">enter</button>
+    <p class="sub">GitHub-only access · restricted to <strong>@1337misterzero</strong>.</p>
+    <button class="btn primary" id="loginBtn">continue with GitHub ↗</button>
     <div id="loginStatus" class="status"></div>
   </section>
 
@@ -161,12 +157,11 @@ window.ZERO_ADMIN={apiBase:"https://zero-blog-admin.vercel.app"};
 <script>
 const API=String(window.ZERO_ADMIN?.apiBase||"").replace(/\/$/,"");
 const $=id=>document.getElementById(id);
-const state={posts:[],files:[],current:null,mode:"post",token:sessionStorage.getItem("zero_admin_api_token")||""};
+const state={posts:[],files:[],current:null,mode:"post",user:null};
 
 function setStatus(text,cls="status"){const el=$("saveStatus");el.textContent=text;el.className=cls}
 async function api(path,options={}){
   const headers={"Content-Type":"application/json",...(options.headers||{})};
-  if(state.token)headers.Authorization="Bearer "+state.token;
 
   const [route,query=""]=path.split("?");
   const u=new URL("/api",API);
@@ -175,10 +170,24 @@ async function api(path,options={}){
     for(const [k,v] of new URLSearchParams(query))u.searchParams.set(k,v);
   }
 
-  const res=await fetch(u.toString(),{headers,...options});
+  const res=await fetch(u.toString(),{credentials:"include",headers,...options});
   const data=await res.json().catch(()=>({}));
   if(!res.ok) throw new Error(data.error||("HTTP "+res.status));
   return data;
+}
+
+function enterApp(user){
+  state.user=user||{login:"1337misterzero"};
+  $("loginPanel").classList.add("hidden");
+  $("app").classList.remove("hidden");
+}
+
+function showLogin(message=""){
+  $("app").classList.add("hidden");
+  $("loginPanel").classList.remove("hidden");
+  const status=$("loginStatus");
+  status.textContent=message;
+  status.className=message?"status err":"status";
 }
 function esc(v){return String(v||"")}
 function slugify(v){return v.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"post"}
@@ -334,27 +343,42 @@ document.querySelectorAll(".tab").forEach(tab=>tab.onclick=()=>{
   $("postList").classList.toggle("hidden",mode!=="posts");
   $("fileList").classList.toggle("hidden",mode!=="files");
 });
-$("logoutBtn").onclick=()=>{
-  state.token="";
-  sessionStorage.removeItem("zero_admin_api_token");
-  $("app").classList.add("hidden");
-  $("loginPanel").classList.remove("hidden");
+$("logoutBtn").onclick=async()=>{
+  try{await api("/logout",{method:"POST"})}catch{}
+  showLogin("");
 };
-$("loginBtn").onclick=async()=>{
-  const status=$("loginStatus");
+$("loginBtn").onclick=()=>{
+  if(!API){
+    showLogin("Admin API unavailable.");
+    return;
+  }
+  window.location.href=API+"/api?route=/auth/github";
+};
+
+async function boot(){
+  if(!API){
+    showLogin("Admin API unavailable.");
+    return;
+  }
+
+  const params=new URLSearchParams(location.search);
+  const error=params.get("error");
+  if(error==="not_authorized")showLogin("GitHub account is not authorized.");
+  else if(error==="oauth_failed")showLogin("GitHub login failed.");
+  else if(error==="invalid_oauth_state")showLogin("Login session expired. Try again.");
+
   try{
-    if(!API||API.includes("YOUR-WORKER-URL"))throw new Error("Admin API is not configured yet.");
-    const login=await api("/login",{method:"POST",body:JSON.stringify({password:$("password").value})});
-    state.token=login.token;
-    sessionStorage.setItem("zero_admin_api_token",state.token);
-    $("loginPanel").classList.add("hidden");$("app").classList.remove("hidden");
-    await Promise.all([loadPosts(),loadFiles()]);
-  }catch(e){status.textContent=e.message;status.className="status err"}
-};
-if(!API){
-  $("loginStatus").textContent="Admin API unavailable.";
-  $("loginStatus").className="status err";
+    const session=await api("/session");
+    if(session.authenticated){
+      enterApp(session.user);
+      await Promise.all([loadPosts(),loadFiles()]);
+      return;
+    }
+  }catch{}
+
+  if(error==="auth_ok"){}
 }
+boot();
 </script>
 </body>
 </html>
