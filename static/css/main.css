@@ -35,7 +35,7 @@ body{
   font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   line-height:1.7;
   overflow-x:hidden;
-  padding-bottom:100px;
+  padding-bottom:132px;
 }
 
 body::before{
@@ -447,25 +447,18 @@ button{
   left:50%;
   bottom:16px;
   z-index:60;
-  width:min(560px,calc(100% - 28px));
-  min-height:66px;
-  transform:translateX(-50%);
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:center;
-  gap:14px;
-  padding:11px 13px;
-  overflow:hidden;
+  width:min(460px,calc(100% - 28px));
+  padding:8px;
   border:1px solid rgba(51,40,62,.95);
-  border-radius:12px;
+  border-radius:13px;
   background:
-    linear-gradient(120deg,rgba(168,85,247,.075),rgba(0,217,255,.03) 55%,rgba(7,7,11,.98)),
+    linear-gradient(130deg,rgba(168,85,247,.08),rgba(0,217,255,.025) 55%,rgba(7,7,11,.98)),
     rgba(7,7,11,.94);
   backdrop-filter:blur(20px) saturate(150%);
   box-shadow:
-    0 16px 50px rgba(0,0,0,.46),
-    0 0 0 1px rgba(0,0,0,.2),
+    0 18px 60px rgba(0,0,0,.5),
     inset 0 1px 0 rgba(255,255,255,.035);
+  overflow:hidden;
 }
 
 .radio-dock::before{
@@ -475,91 +468,48 @@ button{
   pointer-events:none;
   background:
     linear-gradient(90deg,transparent,rgba(0,217,255,.06),transparent),
-    repeating-linear-gradient(0deg,transparent 0,transparent 4px,rgba(255,255,255,.018) 5px);
-  opacity:.7;
+    repeating-linear-gradient(0deg,transparent 0,transparent 4px,rgba(255,255,255,.015) 5px);
+  opacity:.75;
 }
 
-.radio-scanline{
+.radio-dock::after{
+  content:"";
   position:absolute;
-  inset:0;
-  pointer-events:none;
-  opacity:.22;
-  background:linear-gradient(180deg,transparent 0%,rgba(0,217,255,.08) 48%,transparent 52%);
-  transform:translateY(-100%);
-  animation:scan 4.5s linear infinite;
+  left:0;
+  right:0;
+  top:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--blue),var(--purple),transparent);
+  opacity:.55;
 }
 
-@keyframes scan{
-  to{transform:translateY(100%)}
-}
-
-.radio-play{
+.radio-header{
   position:relative;
   z-index:1;
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  padding:0;
-  border:1px solid rgba(168,85,247,.38);
-  border-radius:9px;
-  cursor:pointer;
-  background:
-    linear-gradient(135deg,rgba(168,85,247,.16),rgba(0,217,255,.06));
-  box-shadow:
-    inset 0 0 18px rgba(168,85,247,.06),
-    0 0 20px rgba(168,85,247,.05);
-  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
-}
-
-.radio-play:hover{
-  transform:translateY(-1px);
-  border-color:rgba(0,217,255,.7);
-  box-shadow:
-    inset 0 0 18px rgba(0,217,255,.08),
-    0 0 22px rgba(0,217,255,.08);
-}
-
-.radio-play:active{
-  transform:translateY(0);
-}
-
-.radio-play-icon{
-  font-size:13px;
-  transform:translateX(1px);
-  color:#fff;
-  text-shadow:1px 0 var(--blue),-1px 0 var(--purple);
-}
-
-.radio-info{
-  position:relative;
-  z-index:1;
-  min-width:0;
-}
-
-.radio-topline{
+  height:20px;
   display:flex;
-  gap:10px;
   align-items:center;
-  margin-bottom:2px;
-  font:9px "JetBrains Mono",monospace;
+  gap:7px;
+  padding:0 3px 5px;
+  color:var(--muted);
+  font:8px "JetBrains Mono",monospace;
   letter-spacing:1px;
 }
 
-.radio-status{
-  color:var(--muted);
+.radio-header a{
+  margin-left:auto;
+  color:var(--muted-2);
+  transition:color .18s ease;
 }
 
-.radio-live{
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
-  color:var(--blue-soft);
+.radio-header a:hover{
+  color:var(--blue);
 }
 
-.radio-live b{
+.radio-led{
   width:5px;
   height:5px;
+  flex:none;
   border-radius:50%;
   background:var(--blue);
   box-shadow:0 0 10px rgba(0,217,255,.8);
@@ -567,40 +517,19 @@ button{
 }
 
 @keyframes livePulse{
-  0%,100%{opacity:.4;transform:scale(.8)}
+  0%,100%{opacity:.45;transform:scale(.8)}
   50%{opacity:1;transform:scale(1.1)}
 }
 
-.radio-name{
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-  font:700 11px/1.25 "JetBrains Mono",monospace;
-  letter-spacing:.9px;
-}
-
-.radio-sub{
-  margin-top:2px;
-  color:var(--muted-2);
-  font:8px "JetBrains Mono",monospace;
-  letter-spacing:1px;
-}
-
-.radio-volume{
+.radio-dock iframe{
   position:relative;
   z-index:1;
-  display:flex;
-  align-items:center;
-  gap:7px;
-  color:var(--muted);
-  font:8px "JetBrains Mono",monospace;
-  letter-spacing:.8px;
-}
-
-.radio-volume input{
-  width:76px;
-  accent-color:var(--purple);
-  cursor:pointer;
+  display:block;
+  width:100%;
+  height:92px;
+  border:0;
+  border-radius:8px;
+  background:#0b0a10;
 }
 
 /* 404 */
@@ -660,26 +589,11 @@ button{
   .radio-dock{
     width:calc(100% - 20px);
     bottom:10px;
-    grid-template-columns:auto 1fr auto;
-    gap:10px;
-    padding:9px 10px;
-    border-radius:10px;
+    padding:8px;
+    border-radius:11px;
   }
 
-  .radio-play{
-    width:38px;
-    height:38px;
-  }
-
-  .radio-volume span{
-    display:none;
-  }
-
-  .radio-volume input{
-    width:58px;
-  }
-
-  .radio-sub{
+  .radio-header{
     font-size:7px;
   }
 }
