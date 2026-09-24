@@ -1,41 +1,19 @@
 {{ define "main" }}
-<article class="article wrap">
+<section class="feed wrap">
+  <article class="post post-reader">
+    <div class="post-date">{{ .Date.Format "02 Jan 2006" }}</div>
 
-  <div class="article-meta">
-    <a class="back" href="{{ "/posts/" | relURL }}">← posts</a>
-    <span>{{ .Date.Format "02 Jan 2006" }}</span>
-  </div>
+    <h1 class="post-title glitch article-title" data-text="{{ .Title }}">{{ .Title }}</h1>
 
-  <h1 class="article-title glitch" data-text="{{ .Title }}">{{ .Title }}</h1>
-
-  {{ with .Description }}
-    <p class="article-description">{{ . }}</p>
-  {{ end }}
-
-  <div class="article-content">
-    {{ .Content }}
-  </div>
-
-  <nav class="post-nav" aria-label="Post navigation">
-    {{ with .PrevInSection }}
-      <a href="{{ .RelPermalink }}">
-        <small>← previous</small>
-        <strong>{{ .Title }}</strong>
-      </a>
-    {{ else }}
-      <span></span>
+    {{ with .Description }}
+      <p class="preview post-description">{{ . }}</p>
     {{ end }}
 
-    {{ with .NextInSection }}
-      <a class="next" href="{{ .RelPermalink }}">
-        <small>next →</small>
-        <strong>{{ .Title }}</strong>
-      </a>
-    {{ else }}
-      <span></span>
-    {{ end }}
-  </nav>
+    <div class="post-content">
+      {{ .Content }}
+    </div>
 
-  <a class="back" href="{{ "/posts/" | relURL }}">← back to posts</a>
-</article>
+    <a class="back post-back" href="/blog/">← voltar</a>
+  </article>
+</section>
 {{ end }}
