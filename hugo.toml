@@ -15,3 +15,9 @@ unsafe = true
 [outputs]
 home = ['HTML', 'RSS']
 section = ['HTML', 'RSS']
+
+
+# Set this after deploying your Waline server.
+# Anonymous comments and GitHub login are enabled by Waline.
+[params]
+walineServerURL = ''
