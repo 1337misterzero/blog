@@ -19,36 +19,24 @@
 
   <main>{{ block "main" . }}{{ end }}</main>
 
-  <section class="radio-dock" id="radio-dock" aria-label="Rock radio player">
-    <audio
-      id="rock-radio"
-      preload="none"
-      crossorigin="anonymous"
-      src="https://ice5.somafm.com/metal-128-mp3">
-    </audio>
-
-    <div class="radio-scanline" aria-hidden="true"></div>
-
-    <button class="radio-play" id="radio-play" type="button" aria-label="Play rock radio">
-      <span class="radio-play-icon">▶</span>
-    </button>
-
-    <div class="radio-info">
-      <div class="radio-topline">
-        <span class="radio-status" id="radio-status">OFFLINE</span>
-        <span class="radio-live"><b></b> LIVE</span>
-      </div>
-      <div class="radio-name">METAL DETECTOR</div>
-      <div class="radio-sub">ROCK // METAL // INDUSTRIAL</div>
+  <section class="radio-dock" aria-label="Metal and rock radio">
+    <div class="radio-header">
+      <span class="radio-led" aria-hidden="true"></span>
+      <span>ANTYRADIO // METAL / ROCK</span>
+      <a href="https://retunefm.com/radio/antyradio/" target="_blank" rel="noopener noreferrer">OPEN ↗</a>
     </div>
-
-    <label class="radio-volume" aria-label="Radio volume">
-      <span>VOL</span>
-      <input id="radio-volume" type="range" min="0" max="1" step="0.01" value="0.65">
-    </label>
+    <iframe
+      src="https://retunefm.com/embed/antyradio"
+      title="Antyradio — metal and rock radio"
+      width="100%"
+      height="92"
+      frameborder="0"
+      scrolling="no"
+      loading="lazy"
+      allow="autoplay">
+    </iframe>
   </section>
 
   <script src="{{ "js/infinite.js" | relURL }}" defer></script>
-  <script src="{{ "js/radio.js" | relURL }}" defer></script>
 </body>
 </html>
