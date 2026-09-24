@@ -1,10 +1,6 @@
 {{ define "main" }}
 {{ $p := .Paginate (.Pages.ByDate.Reverse) 5 }}
 
-<section class="page-head wrap">
-  <h1>posts</h1>
-</section>
-
 <section class="feed wrap" id="post-feed" data-next="{{ if $p.HasNext }}{{ $p.Next.URL }}{{ end }}">
   {{ range $p.Pages }}
     <article class="post">
