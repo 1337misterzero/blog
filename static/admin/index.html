@@ -157,11 +157,12 @@ window.ZERO_ADMIN={apiBase:"https://zero-blog-admin.vercel.app"};
 <script>
 const API=String(window.ZERO_ADMIN?.apiBase||"").replace(/\/$/,"");
 const $=id=>document.getElementById(id);
-const state={posts:[],files:[],current:null,mode:"post",user:null};
+const state={posts:[],files:[],current:null,mode:"post",user:null,token:sessionStorage.getItem("zero_admin_api_token")||""};
 
 function setStatus(text,cls="status"){const el=$("saveStatus");el.textContent=text;el.className=cls}
 async function api(path,options={}){
   const headers={"Content-Type":"application/json",...(options.headers||{})};
+  if(state.token)headers.Authorization="Bearer "+state.token;
 
   const [route,query=""]=path.split("?");
   const u=new URL("/api",API);
@@ -345,6 +346,9 @@ document.querySelectorAll(".tab").forEach(tab=>tab.onclick=()=>{
 });
 $("logoutBtn").onclick=async()=>{
   try{await api("/logout",{method:"POST"})}catch{}
+  state.token="";
+  state.user=null;
+  sessionStorage.removeItem("zero_admin_api_token");
   showLogin("");
 };
 $("loginBtn").onclick=()=>{
@@ -359,6 +363,14 @@ async function boot(){
   if(!API){
     showLogin("Admin API unavailable.");
     return;
+  }
+
+  const fragment=new URLSearchParams(location.hash.slice(1));
+  const oauthToken=fragment.get("admin_token");
+  if(oauthToken){
+    state.token=oauthToken;
+    sessionStorage.setItem("zero_admin_api_token",state.token);
+    history.replaceState({},document.title,location.pathname+location.search);
   }
 
   const params=new URLSearchParams(location.search);
