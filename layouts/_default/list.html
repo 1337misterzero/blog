@@ -1,13 +1,24 @@
 {{ define "main" }}
+<section class="page-head wrap">
+  <div class="eyebrow">ARCHIVE</div>
+  <h1>posts</h1>
+</section>
+
 <section class="feed wrap" id="post-feed">
   {{ range $i, $post := .Pages.ByDate.Reverse }}
     <article class="post {{ if ge $i 4 }}post-hidden{{ end }}">
-      <div class="post-date">{{ $post.Date.Format "02 Jan 2006" }}</div>
-      <h1><a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a></h1>
-      <p class="preview">{{ with $post.Description }}{{ . }}{{ else }}{{ $post.Summary | plainify | truncate 220 }}{{ end }}</p>
+      <div class="post-index">#{{ printf "%02d" (add $i 1) }}</div>
+      <div class="post-body">
+        <div class="post-date">{{ $post.Date.Format "02 Jan 2006" }}</div>
+        <h1><a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a></h1>
+        <p class="preview">
+          {{ with $post.Description }}{{ . }}{{ else }}{{ $post.Summary | plainify | truncate 220 }}{{ end }}
+        </p>
+        <a class="open" href="{{ $post.RelPermalink }}">open <span>→</span></a>
+      </div>
     </article>
   {{ else }}
-    <p class="empty">No posts.</p>
+    <div class="empty">no posts</div>
   {{ end }}
   <div id="load-more" class="load-more" aria-hidden="true"></div>
 </section>
