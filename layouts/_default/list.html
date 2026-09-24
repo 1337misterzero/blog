@@ -1,44 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ .Title }} // zero</title>
-  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
-</head>
-
-<body>
-<header class="site-header">
-  <div class="wrap header-inner">
-    <a class="brand" href="{{ "/" | relURL }}">zero</a>
-    <nav>
-      <a href="{{ "/" | relURL }}">home</a>
-      <a href="{{ "/posts/" | relURL }}">posts</a>
-      <a href="{{ "/about/" | relURL }}">about</a>
-    </nav>
-  </div>
-</header>
-
-<main class="wrap page">
-  <div class="eyebrow">ARCHIVE</div>
-  <h1>posts</h1>
-
-  <div class="archive">
-    {{ range .Pages.ByDate.Reverse }}
-      <article class="archive-item">
-        <div class="post-meta">{{ .Date.Format "2006.01.02" }}</div>
-        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-        {{ with .Description }}<p>{{ . }}</p>{{ end }}
-        <a class="read" href="{{ .RelPermalink }}">read →</a>
-      </article>
-    {{ else }}
-      <p>No posts found.</p>
-    {{ end }}
-  </div>
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">zero // end transmission</div>
-</footer>
-</body>
-</html>
+{{ define "main" }}
+<section class="feed wrap" id="post-feed">
+  {{ range $i, $post := .Pages.ByDate.Reverse }}
+    <article class="post {{ if ge $i 4 }}post-hidden{{ end }}">
+      <div class="post-date">{{ $post.Date.Format "02 Jan 2006" }}</div>
+      <h1><a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a></h1>
+      <p class="preview">{{ with $post.Description }}{{ . }}{{ else }}{{ $post.Summary | plainify | truncate 220 }}{{ end }}</p>
+    </article>
+  {{ else }}
+    <p class="empty">No posts.</p>
+  {{ end }}
+  <div id="load-more" class="load-more" aria-hidden="true"></div>
+</section>
+{{ end }}
