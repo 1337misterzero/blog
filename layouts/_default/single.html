@@ -1,7 +1,7 @@
 {{ define "main" }}
 <section class="feed wrap" id="single-post-page">
   <article class="post post-reader" id="post-reader">
-    <a class="back post-back" href="/blog/">← voltar</a>
+    <a class="back post-back" href="/blog/">← back</a>
 
     <div class="post-date">{{ .Date.Format "02 Jan 2006" }}</div>
 
@@ -18,7 +18,7 @@
     <section class="discussion" aria-label="comments">
       <div class="discussion-heading">
         <span>THREAD</span>
-        <small>anonymous / github</small>
+        <small>github / comments</small>
       </div>
       <div class="utterances-host" data-post-path="{{ .RelPermalink }}" data-post-title="{{ .Title }}"></div>
     </section>
