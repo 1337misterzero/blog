@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#07070b">
   <title>{{ if .IsHome }}zero{{ else }}{{ .Title }} — zero{{ end }}</title>
   <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
 </head>
 
 <body>
@@ -39,5 +40,6 @@
   </section>
 
   <script src="{{ "js/infinite.js" | relURL }}" defer></script>
+  <script type="module" src="{{ "js/comments.js" | relURL }}"></script>
 </body>
 </html>
