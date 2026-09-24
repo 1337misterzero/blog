@@ -213,22 +213,30 @@ nav a:hover{
   to{opacity:1;transform:none}
 }
 
-/* posts page */
+/* post reader */
 
-.page-head{
-  padding-top:64px;
-  padding-bottom:18px;
+.single-post-page{
+  padding-bottom:120px;
 }
 
-.page-head h1{
-  margin:0;
-  font:600 42px/1 "JetBrains Mono",monospace;
+.post-open{
+  overflow-x:hidden;
+}
+
+#post-feed[hidden],
+#post-view[hidden]{
+  display:none;
+}
+
+#post-view{
+  min-height:70vh;
 }
 
 /* single post: same shell as home */
 
 .back{
   display:inline-block;
+  margin-bottom:26px;
   color:var(--muted);
   font:10px "JetBrains Mono",monospace;
   text-transform:uppercase;
@@ -239,6 +247,15 @@ nav a:hover{
 
 .post-reader{
   padding-bottom:72px;
+}
+
+.post-loading{
+  padding:70px 0;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font:10px "JetBrains Mono",monospace;
+  text-transform:uppercase;
+  letter-spacing:1px;
 }
 
 .post-reader .post-title{
@@ -329,6 +346,10 @@ nav a:hover{
 
   .post-content{
     font-size:16px;
+  }
+
+  .post-back{
+    margin-bottom:22px;
   }
 }
 
