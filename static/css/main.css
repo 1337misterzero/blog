@@ -300,11 +300,6 @@ button{
   padding:46px 0 52px;
   border-top:1px solid var(--line);
   animation:fadeIn .5s cubic-bezier(.2,.8,.2,1) both;
-  transition:padding-left .2s ease,border-color .2s ease,transform .2s ease;
-}
-
-.post:hover{
-  border-color:var(--line-bright);
 }
 
 .post-date{
