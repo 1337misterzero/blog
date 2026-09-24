@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ .Title }} // zero_</title>
+<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+</head>
+<body>
+<header>
+<a class="logo" href="{{ "/" | relURL }}">zero_</a>
+<nav>
+<a href="{{ "/" | relURL }}">home</a>
+<a href="{{ "/posts/" | relURL }}">posts</a>
+<a href="{{ "/about/" | relURL }}">about</a>
+</nav>
+</header>
+<main>
+<article class="article">
+<div class="date">{{ .Date.Format "2006.01.02" }} // TRANSMISSION</div>
+<h1>{{ .Title }}</h1>
+{{ with .Description }}<p class="description">{{ . }}</p>{{ end }}
+<div class="content">{{ .Content }}</div>
+<a class="read" href="{{ "/posts/" | relURL }}">← BACK TO ARCHIVE</a>
+</article>
+</main>
+<footer>zero_ // end transmission</footer>
+</body>
+</html>

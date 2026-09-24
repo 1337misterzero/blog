@@ -1,20 +1,13 @@
-baseURL = "https://1337misterzero.github.io/blog/"
-languageCode = "en-us"
-title = "zero_"
-paginate = 8
+baseURL = 'https://1337misterzero.github.io/blog/'
+title = 'zero_'
+languageCode = 'en-us'
+paginate = 10
 
 [params]
-description = "systems / networks / code / linux / noise"
-author = "zero"
-images = []
+  description = 'systems / networks / code / linux / security / engineering'
+  author = 'zero'
 
 [markup]
-[markup.goldmark]
-[markup.goldmark.renderer]
-unsafe = true
-
-[outputs]
-home = ["HTML", "RSS"]
-section = ["HTML", "RSS"]
-taxonomy = ["HTML"]
-term = ["HTML"]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
