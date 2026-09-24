@@ -121,6 +121,32 @@ button{
   justify-content:space-between;
 }
 
+.header-tools{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.settings-link{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:29px;
+  height:29px;
+  border:1px solid transparent;
+  border-radius:7px;
+  color:var(--muted);
+  font:16px/1 "JetBrains Mono",monospace;
+  transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease;
+}
+
+.settings-link:hover{
+  color:#fff;
+  border-color:var(--line-bright);
+  background:rgba(168,85,247,.08);
+  transform:rotate(8deg);
+}
+
 .brand{
   position:relative;
   display:inline-block;
@@ -440,6 +466,49 @@ button{
   margin-top:12px;
 }
 
+/* discussion */
+
+.discussion{
+  max-width:700px;
+  margin:72px 0 30px;
+  padding-top:24px;
+  border-top:1px solid var(--line);
+}
+
+.discussion-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+  color:var(--purple-soft);
+  font:10px "JetBrains Mono",monospace;
+  letter-spacing:1px;
+}
+
+.discussion-heading small{
+  color:var(--muted-2);
+  font:8px "JetBrains Mono",monospace;
+}
+
+#waline{
+  min-height:30px;
+}
+
+.discussion-offline{
+  padding:14px 0;
+  color:var(--muted-2);
+  font:9px "JetBrains Mono",monospace;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+body .wl-panel,
+body .wl-card,
+body .wl-editor{
+  background:transparent!important;
+}
+
 /* radio */
 
 .radio-dock{
@@ -564,6 +633,10 @@ button{
 
   .header-inner{
     min-height:60px;
+  }
+
+  .header-tools{
+    gap:8px;
   }
 
   .header-signal{
