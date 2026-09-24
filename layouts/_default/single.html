@@ -20,14 +20,7 @@
         <span>THREAD</span>
         <small>anonymous / github</small>
       </div>
-      <div
-        id="waline"
-        data-path="{{ .RelPermalink }}"
-        data-server="{{ .Site.Params.walineServerURL | default "" }}">
-      </div>
-      <div class="discussion-offline" id="discussion-offline">
-        comment server not configured
-      </div>
+      <div class="utterances-host" data-post-path="{{ .RelPermalink }}" data-post-title="{{ .Title }}"></div>
     </section>
   </article>
 </section>
