@@ -260,7 +260,7 @@ async function handle(req, res) {
 
       return redirect(
         res,
-        publicOrigin + "/blog/admin/?auth=ok",
+        publicOrigin + "/blog/admin/?auth=ok#admin_token=" + encodeURIComponent(session),
         publicOrigin,
         [
           cookie("zero_admin_session", session, { maxAge: SESSION_TTL, sameSite: "None" }),
