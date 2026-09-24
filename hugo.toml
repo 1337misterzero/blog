@@ -6,6 +6,7 @@ mainSections = ['posts']
 [params]
 description = 'systems / networks / code / linux / security / engineering'
 author = 'zero'
+walineServerURL = ''
 
 [markup]
 [markup.goldmark]
@@ -15,9 +16,3 @@ unsafe = true
 [outputs]
 home = ['HTML', 'RSS']
 section = ['HTML', 'RSS']
-
-
-# Set this after deploying your Waline server.
-# Anonymous comments and GitHub login are enabled by Waline.
-[params]
-walineServerURL = ''
