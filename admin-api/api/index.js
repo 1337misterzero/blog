@@ -287,6 +287,7 @@ async function handle(req, res) {
   }
 
   if (route === "/logout" && req.method === "POST") {
+    res.setHeader("Set-Cookie", cookie("zero_admin_session", "", { maxAge: 0, sameSite: "None" }));
     return send(res, 200, { ok: true }, publicOrigin);
   }
 
