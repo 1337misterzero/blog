@@ -1,16 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>404 // zero</title>
-  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 — zero</title>
+<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
 </head>
 <body>
-<main class="wrap error-page">
-  <div class="eyebrow">404 // SIGNAL LOST</div>
-  <h1>nothing here.</h1>
-  <a class="button" href="{{ "/" | relURL }}">return home</a>
-</main>
-</body>
-</html>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="{{ "/" | relURL }}">zero</a>
+<nav><a href="{{ "/" | relURL }}">home</a><a href="{{ "/posts/" | relURL }}">posts</a><a href="{{ "/about/" | relURL }}">about</a></nav>
+</div></header>
+<main class="error wrap"><div class="post-date">404</div><h1>page not found</h1><a class="back" href="{{ "/" | relURL }}">home</a></main>
+</body></html>
