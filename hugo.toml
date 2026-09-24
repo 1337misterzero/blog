@@ -16,3 +16,4 @@ unsafe = true
 [outputs]
 home = ['HTML', 'RSS']
 section = ['HTML', 'RSS']
+walineServerURL = ''
