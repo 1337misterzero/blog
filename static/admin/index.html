@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>admin — zero</title>
+<style>
+:root{--bg:#07050b;--panel:#0d0a12;--text:#eeeaf3;--muted:#8e8797;--line:#241c2d;--purple:#a855f7;--cyan:#00e5ff;--green:#70ff9b;--red:#ff5e8a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px system-ui,sans-serif}main{width:min(760px,calc(100% - 32px));margin:56px auto}.brand{font:700 24px "JetBrains Mono",monospace;margin-bottom:28px}.panel{border:1px solid var(--line);background:var(--panel);padding:24px;margin-bottom:14px}.hidden{display:none}.field{margin-bottom:14px}label{display:block;margin-bottom:6px;color:var(--muted);font:11px "JetBrains Mono",monospace;text-transform:uppercase}input,textarea{width:100%;border:1px solid var(--line);background:#050408;color:var(--text);padding:11px;font:14px system-ui}textarea{min-height:280px;resize:vertical}button{border:1px solid var(--purple);background:var(--purple);color:#0a0510;padding:10px 14px;font:12px "JetBrains Mono",monospace;cursor:pointer}button:hover{filter:brightness(1.08)}button.secondary{background:transparent;color:var(--muted);border-color:var(--line)}.status{margin-top:10px;font:12px "JetBrains Mono",monospace;color:var(--muted)}.ok{color:var(--green)}.err{color:var(--red)}.hint{color:var(--muted);font-size:12px;line-height:1.6;margin-bottom:18px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}@media(max-width:600px){nav{font-size:11px}}
+</style>
+</head>
+<body>
+<main>
+<div class="brand">zero / admin</div>
+
+<section id="setup" class="panel hidden">
+<div class="field"><label>Admin password</label><input id="setup1" type="password" autocomplete="new-password"></div>
+<div class="field"><label>Confirm</label><input id="setup2" type="password" autocomplete="new-password"></div>
+<button id="setupBtn">set password</button>
+<div id="setupStatus" class="status"></div>
+</section>
+
+<section id="login" class="panel">
+<div class="field"><label>Login</label><input id="user" value="zero" autocomplete="username"></div>
+<div class="field"><label>Password</label><input id="pass" type="password" autocomplete="current-password"></div>
+<button id="loginBtn">login</button>
+<div id="loginStatus" class="status"></div>
+</section>
+
+<section id="editor" class="hidden">
+<div class="top"><div class="hint">The password only gates this static admin page. GitHub token is the real write credential.</div><button id="logout" class="secondary">logout</button></div>
+<div class="panel">
+<div class="field"><label>GitHub token</label><input id="token" type="password" placeholder="Fine-grained token: Contents read/write"></div>
+<div class="field"><label>Title</label><input id="title"></div>
+<div class="field"><label>Date</label><input id="date" type="datetime-local"></div>
+<div class="field"><label>Preview</label><input id="preview" maxlength="220"></div>
+<div class="field"><label>Tags</label><input id="tags" placeholder="networking, linux, notes"></div>
+<div class="field"><label>Content</label><textarea id="body"></textarea></div>
+<button id="publish">publish</button>
+<div id="publishStatus" class="status"></div>
+</div>
+</section>
+</main>
+
+<script>
+const REPO="1337misterzero/blog",BRANCH="main",PASSKEY="zero_admin_password_hash";
+const $=id=>document.getElementById(id);
+function show(id,on){$(id).classList.toggle("hidden",!on)}
+function slug(s){return s.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"post"}
+async function hash(v){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(v));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+function b64(v){return btoa(unescape(encodeURIComponent(v)))}
+
+if(!localStorage.getItem(PASSKEY))show("setup",true);
+
+$("setupBtn").onclick=async()=>{
+  const a=$("setup1").value,b=$("setup2").value,s=$("setupStatus");
+  if(a.length<10){s.textContent="Use at least 10 characters.";s.className="status err";return}
+  if(a!==b){s.textContent="Passwords do not match.";s.className="status err";return}
+  localStorage.setItem(PASSKEY,await hash(a));
+  s.textContent="Password saved.";s.className="status ok";
+  setTimeout(()=>location.reload(),500);
+};
+
+$("loginBtn").onclick=async()=>{
+  const s=$("loginStatus");
+  const ok=$("user").value==="zero" && await hash($("pass").value)===localStorage.getItem(PASSKEY);
+  if(!ok){s.textContent="Invalid login.";s.className="status err";return}
+  sessionStorage.setItem("zero_admin_session","1");show("login",false);show("editor",true);
+};
+
+if(sessionStorage.getItem("zero_admin_session")==="1"){show("login",false);show("editor",true)}
+
+$("logout").onclick=()=>{sessionStorage.removeItem("zero_admin_session");location.reload()};
+
+$("publish").onclick=async()=>{
+  const s=$("publishStatus");
+  const token=$("token").value.trim(),title=$("title").value.trim(),date=$("date").value,preview=$("preview").value.trim(),tags=$("tags").value.split(",").map(x=>x.trim()).filter(Boolean),body=$("body").value.trim();
+  if(!token||!title||!date||!body){s.textContent="Token, title, date and content are required.";s.className="status err";return}
+  const path="content/posts/"+slug(title)+".md";
+  const front=[
+    "---",
+    "title: "+JSON.stringify(title),
+    "date: "+new Date(date).toISOString(),
+    "description: "+JSON.stringify(preview),
+    "draft: false",
+    "tags:",
+    ...(tags.length?tags.map(t=>"  - "+JSON.stringify(t)):["  -"]),
+    "---",
+    "",
+    body,
+    ""
+  ].join("\n");
+  try{
+    s.textContent="Publishing…";s.className="status";
+    const check=await fetch("https://api.github.com/repos/"+REPO+"/contents/"+path+"?ref="+BRANCH,{headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json"}});
+    if(check.ok)throw new Error("A post with this slug already exists.");
+    if(check.status!==404)throw new Error("GitHub token rejected.");
+    const put=await fetch("https://api.github.com/repos/"+REPO+"/contents/"+path,{
+      method:"PUT",
+      headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json","Content-Type":"application/json"},
+      body:JSON.stringify({message:"new post: "+title,content:b64(front),branch:BRANCH})
+    });
+    if(!put.ok){const d=await put.json().catch(()=>({}));throw new Error(d.message||"Publish failed.")}
+    s.textContent="Published.";s.className="status ok";
+    $("title").value="";$("preview").value="";$("tags").value="";$("body").value="";
+  }catch(e){s.textContent=e.message;s.className="status err"}
+};
+</script>
+</body>
+</html>
