@@ -12,7 +12,7 @@ function cors(origin) {
   };
 }
 
-function send(res, status, data, origin) {
+function send(res, status, data,publicOrigin) {
   res.status(status);
   for (const [k,v] of Object.entries({
     "Content-Type":"application/json; charset=utf-8",
@@ -78,7 +78,11 @@ function encodeGitHubContent(content) {
 }
 
 async function handle(req,res) {
-  const origin=req.headers.origin || "https://1337misterzero.github.io";
+  const origin=req.headers.origin || "";
+  if(origin && origin!==process.env.ALLOWED_ORIGIN){
+    return send(res,403,{error:"Origin not allowed."},process.env.ALLOWED_ORIGIN);
+  }
+  const publicOrigin=process.env.ALLOWED_ORIGIN;
   if(req.method==="OPTIONS"){
     res.status(204);
     for(const [k,v] of Object.entries(cors(origin)))res.setHeader(k,v);
@@ -88,11 +92,11 @@ async function handle(req,res) {
   const url=new URL(req.url,"https://admin.invalid");
 
   if(url.pathname==="/login" && req.method==="POST"){
-    if(req.body?.password!==process.env.ADMIN_PASSWORD)return send(res,401,{error:"Invalid password."},origin);
-    return send(res,200,{ok:true,token:tokenFor(Math.floor(Date.now()/1000)+8*60*60)},origin);
+    if(req.body?.password!==process.env.ADMIN_PASSWORD)return send(res,401,{error:"Invalid password."},publicOrigin);
+    return send(res,200,{ok:true,token:tokenFor(Math.floor(Date.now()/1000)+8*60*60)},publicOrigin);
   }
 
-  if(!validToken(req.headers.authorization))return send(res,401,{error:"Unauthorized."},origin);
+  if(!validToken(req.headers.authorization))return send(res,401,{error:"Unauthorized."},publicOrigin);
 
   if(url.pathname==="/api/posts" && req.method==="GET"){
     const items=await gh("/repos/"+REPO+"/contents/content/posts?ref="+BRANCH);
@@ -107,7 +111,7 @@ async function handle(req,res) {
       posts.push({path:item.path,title,date,sha:file.sha});
     }
     posts.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-    return send(res,200,{posts},origin);
+    return send(res,200,{posts},publicOrigin);
   }
 
   if(url.pathname==="/api/files" && req.method==="GET"){
@@ -120,26 +124,26 @@ async function handle(req,res) {
       }
     };
     for(const root of ["content","layouts","static/css","static/js","static/admin"])await walk(root);
-    return send(res,200,{files:[...new Set(files)].sort()},origin);
+    return send(res,200,{files:[...new Set(files)].sort()},publicOrigin);
   }
 
   if(url.pathname==="/api/file" && req.method==="GET"){
     const path=url.searchParams.get("path")||"";
-    if(!allowed(path))return send(res,400,{error:"Path not allowed."},origin);
+    if(!allowed(path))return send(res,400,{error:"Path not allowed."},publicOrigin);
     const file=await gh("/repos/"+REPO+"/contents/"+path+"?ref="+BRANCH);
-    return send(res,200,{path:file.path,sha:file.sha,content:decodeGitHubContent(file.content)},origin);
+    return send(res,200,{path:file.path,sha:file.sha,content:decodeGitHubContent(file.content)},publicOrigin);
   }
 
   if(url.pathname==="/api/file" && req.method==="PUT"){
     const body=req.body||{};
     const path=String(body.path||"");
     const content=String(body.content??"");
-    if(!allowed(path))return send(res,400,{error:"Path not allowed."},origin);
-    if(Buffer.byteLength(content,"utf8")>1024*1024)return send(res,413,{error:"File too large."},origin);
+    if(!allowed(path))return send(res,400,{error:"Path not allowed."},publicOrigin);
+    if(Buffer.byteLength(content,"utf8")>1024*1024)return send(res,413,{error:"File too large."},publicOrigin);
 
     let current=null;
     try{current=await gh("/repos/"+REPO+"/contents/"+path+"?ref="+BRANCH)}catch{}
-    if(current && body.sha && current.sha!==body.sha)return send(res,409,{error:"File changed on GitHub. Reload before saving."},origin);
+    if(current && body.sha && current.sha!==body.sha)return send(res,409,{error:"File changed on GitHub. Reload before saving."},publicOrigin);
 
     const result=await gh("/repos/"+REPO+"/contents/"+path,{
       method:"PUT",
@@ -151,13 +155,13 @@ async function handle(req,res) {
         branch:BRANCH
       })
     });
-    return send(res,200,{ok:true,commit:result.commit.sha,sha:result.content.sha,path},origin);
+    return send(res,200,{ok:true,commit:result.commit.sha,sha:result.content.sha,path},publicOrigin);
   }
 
   if(url.pathname==="/api/file" && req.method==="DELETE"){
     const body=req.body||{};
     const path=String(body.path||"");
-    if(!allowed(path)||!body.sha)return send(res,400,{error:"Invalid path or SHA."},origin);
+    if(!allowed(path)||!body.sha)return send(res,400,{error:"Invalid path or SHA."},publicOrigin);
     const result=await gh("/repos/"+REPO+"/contents/"+path,{
       method:"DELETE",
       headers:{"Content-Type":"application/json"},
@@ -167,16 +171,16 @@ async function handle(req,res) {
         branch:BRANCH
       })
     });
-    return send(res,200,{ok:true,commit:result.commit.sha},origin);
+    return send(res,200,{ok:true,commit:result.commit.sha},publicOrigin);
   }
 
-  return send(res,404,{error:"Not found."},origin);
+  return send(res,404,{error:"Not found."},publicOrigin);
 }
 
 module.exports = async (req,res)=>{
   try { await handle(req,res); }
   catch (e) {
     const origin=req.headers.origin || "https://1337misterzero.github.io";
-    send(res,500,{error:e.message||"Internal error."},origin);
+    send(res,500,{error:e.message||"Internal error."},publicOrigin);
   }
 };
