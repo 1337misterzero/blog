@@ -12,12 +12,12 @@ function cors(origin) {
   };
 }
 
-function send(res, status, data,publicOrigin) {
+function send(res, status, data, publicOrigin) {
   res.status(status);
   for (const [k,v] of Object.entries({
     "Content-Type":"application/json; charset=utf-8",
     "Cache-Control":"no-store",
-    ...cors(origin)
+    ...cors(publicOrigin || "")
   })) res.setHeader(k,v);
   res.end(JSON.stringify(data));
 }
@@ -90,15 +90,16 @@ async function handle(req,res) {
   }
 
   const url=new URL(req.url,"https://admin.invalid");
+  const route=url.searchParams.get("route") || url.pathname;
 
-  if(url.pathname==="/login" && req.method==="POST"){
+  if(route==="/login" && req.method==="POST"){
     if(req.body?.password!==process.env.ADMIN_PASSWORD)return send(res,401,{error:"Invalid password."},publicOrigin);
     return send(res,200,{ok:true,token:tokenFor(Math.floor(Date.now()/1000)+8*60*60)},publicOrigin);
   }
 
   if(!validToken(req.headers.authorization))return send(res,401,{error:"Unauthorized."},publicOrigin);
 
-  if(url.pathname==="/api/posts" && req.method==="GET"){
+  if(route==="/api/posts" && req.method==="GET"){
     const items=await gh("/repos/"+REPO+"/contents/content/posts?ref="+BRANCH);
     const posts=[];
     for(const item of items.filter(x=>x.type==="file"&&x.name.endsWith(".md"))){
@@ -114,7 +115,7 @@ async function handle(req,res) {
     return send(res,200,{posts},publicOrigin);
   }
 
-  if(url.pathname==="/api/files" && req.method==="GET"){
+  if(route==="/api/files" && req.method==="GET"){
     const files=["hugo.toml"];
     const walk=async path=>{
       const items=await gh("/repos/"+REPO+"/contents/"+path+"?ref="+BRANCH);
@@ -127,14 +128,14 @@ async function handle(req,res) {
     return send(res,200,{files:[...new Set(files)].sort()},publicOrigin);
   }
 
-  if(url.pathname==="/api/file" && req.method==="GET"){
+  if(route==="/api/file" && req.method==="GET"){
     const path=url.searchParams.get("path")||"";
     if(!allowed(path))return send(res,400,{error:"Path not allowed."},publicOrigin);
     const file=await gh("/repos/"+REPO+"/contents/"+path+"?ref="+BRANCH);
     return send(res,200,{path:file.path,sha:file.sha,content:decodeGitHubContent(file.content)},publicOrigin);
   }
 
-  if(url.pathname==="/api/file" && req.method==="PUT"){
+  if(route==="/api/file" && req.method==="PUT"){
     const body=req.body||{};
     const path=String(body.path||"");
     const content=String(body.content??"");
@@ -158,7 +159,7 @@ async function handle(req,res) {
     return send(res,200,{ok:true,commit:result.commit.sha,sha:result.content.sha,path},publicOrigin);
   }
 
-  if(url.pathname==="/api/file" && req.method==="DELETE"){
+  if(route==="/api/file" && req.method==="DELETE"){
     const body=req.body||{};
     const path=String(body.path||"");
     if(!allowed(path)||!body.sha)return send(res,400,{error:"Invalid path or SHA."},publicOrigin);
@@ -180,7 +181,7 @@ async function handle(req,res) {
 module.exports = async (req,res)=>{
   try { await handle(req,res); }
   catch (e) {
-    const origin=req.headers.origin || "https://1337misterzero.github.io";
-    send(res,500,{error:e.message||"Internal error."},publicOrigin);
+    const publicOrigin=process.env.ALLOWED_ORIGIN || "";
+    return send(res,500,{error:e.message||"Internal error."},publicOrigin);
   }
 };
