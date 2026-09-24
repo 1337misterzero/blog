@@ -4,26 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="{{ .Description | default .Site.Params.description }}">
-  <meta name="theme-color" content="#07050b">
+  <meta name="theme-color" content="#07070b">
   <title>{{ if .IsHome }}zero{{ else }}{{ .Title }} — zero{{ end }}</title>
   <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
 </head>
-<body>
-  <div class="ambient" aria-hidden="true"></div>
 
+<body>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand" href="{{ "/" | relURL }}">
-        <span>zero</span><i></i>
-      </a>
+      <a class="brand glitch" data-text="zero" href="{{ "/" | relURL }}">zero</a>
 
       <nav>
         <a href="{{ "/" | relURL }}">home</a>
         <a href="{{ "/posts/" | relURL }}">posts</a>
         <a href="{{ "/about/" | relURL }}">about</a>
       </nav>
-
-      <div class="status"><span></span>online</div>
     </div>
   </header>
 
