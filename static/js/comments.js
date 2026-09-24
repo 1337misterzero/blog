@@ -1,33 +1,13 @@
-import { init } from "https://unpkg.com/@waline/client@v3/dist/waline.js";
-
 document.addEventListener("DOMContentLoaded",()=>{
-  const el=document.querySelector("#waline");
-  const offline=document.querySelector("#discussion-offline");
+  const host=document.querySelector(".utterances-host");
+  if(!host)return;
 
-  if(!el){
-    return;
-  }
-
-  const serverURL=el.dataset.server || "";
-
-  if(!serverURL){
-    if(offline) offline.hidden=false;
-    return;
-  }
-
-  if(offline) offline.hidden=true;
-
-  init({
-    el,
-    serverURL,
-    path:el.dataset.path || window.location.pathname,
-    lang:"en",
-    login:"enable",
-    requiredMeta:[],
-    pageSize:10,
-    meta:["nick","mail","link"],
-    copyright:false,
-    emoji:["https://unpkg.com/@waline/emojis@1.2.0/weibo/index.json"],
-    reaction:false
-  });
+  const script=document.createElement("script");
+  script.src="https://utteranc.es/client.js";
+  script.async=true;
+  script.crossOrigin="anonymous";
+  script.setAttribute("repo","1337misterzero/blog");
+  script.setAttribute("issue-term","pathname");
+  script.setAttribute("theme","github-dark");
+  host.appendChild(script);
 });
