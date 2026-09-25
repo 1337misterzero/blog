@@ -36,6 +36,6 @@ It's pretty normal nowadays. Several of my nerdy friends have their own blogs, o
 
 For example, I have a Cardputer ADV, and I'm close to getting the proper certification that would allow me to officially sign off on electronics projects. Because of that, I'm seriously considering developing a firmware for it.
 
-I thought about calling it **Cyber**, with something inspired by *Cyberpunk 2077*, a game I really love.
+I thought about calling it **Johnny**, with something inspired by Johnny Silverhand *Cyberpunk 2077*, a game I really love.
 
 I want to make something genuinely good, because the current firmware options leave a bit to be desired, especially when it comes to the hardware side — just look at the system's battery life, lol.
