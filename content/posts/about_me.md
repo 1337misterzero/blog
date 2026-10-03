@@ -18,7 +18,7 @@ People have always considered me intelligent. Years ago, when I was 14, I got in
 
 Now, I'm trying to work with network infrastructure. I've already spent six months as a research scholar in the field, and I want to specialize in information security — something relatively common and achievable. It may take several years, and I'm currently in my second semester of Computer Science. So far, I'm doing well, with a GPA above 9/10.
 
-* I have other qualifications, degrees, and I've had other jobs, but as far as hacking is concerned, that's basically it. Let's just say I switched careers.
+* I have other qualifications, degrees, and I've had other jobs, but as far as hacking is concerned, that's basically it. Let's just say I switched careers, but i use my old career for hacking.
 
 ## I'm not a script kiddie
 
@@ -26,7 +26,7 @@ Although it's obvious, I feel like I need to say it. As much as we love movies, 
 
 I'm not one of those idiots using ready-made tools to harm random people. I chose to go to college, do things properly, take certification courses, and I want to earn certifications like CCNA, CEH, and OSCP, along with smaller specialized courses, such as those focused on banking.
 
-I am genuinely a white hat. I don't even use pirated software. I'm just at the beginning of my career. The worst thing I do is use AI sometimes.
+I am genuinely a white hat. I don't even use pirated software (maybe). I'm just at the beginning of my career. The worst thing I do is use AI sometimes.
 
 # Blog Purpose
 
